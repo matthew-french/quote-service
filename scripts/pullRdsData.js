@@ -87,8 +87,17 @@ const handler = async () => {
     }
   };
 
+  const batchChunks = async () => {
+    await chunk.forEach(currentBatch => process(currentBatch)); 
+  }
 
-  return chunk.forEach(currentBatch => process(currentBatch));
+  const res = batchChunks();
+
+
+  return console.log(res);
 };
 
-handler();
+handler()
+.then((res) => {
+  console.log('complete...');
+});

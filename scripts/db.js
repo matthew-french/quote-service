@@ -10,7 +10,7 @@ module.exports.connect = () => {
         host: "fillthegapbot-db.test.palringo.aws",
         database: "fillTheGapBot",
         user: "ftgBot",
-        
+        password: "W6o3@hw&tRi4",
         port: 3306,
         charset: 'utf8mb4',
     });
