@@ -1,0 +1,27 @@
+{
+    "TableName": "quotes",
+    "KeySchema": [
+        {
+            "AttributeName": "uuid",
+            "KeyType": "HASH"
+        },
+        {
+            "AttributeName": "language_category",
+            "KeyType": "RANGE"
+        }
+    ],
+    "AttributeDefinitions": [
+        {
+            "AttributeName": "uuid",
+            "AttributeType": "S"
+        },
+        {
+            "AttributeName": "language_category",
+            "AttributeType": "S"
+        }
+    ],
+    "ProvisionedThroughput": {
+        "ReadCapacityUnits": 1,
+        "WriteCapacityUnits": 1
+    }
+}

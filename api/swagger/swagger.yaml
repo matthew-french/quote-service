@@ -1,0 +1,246 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Content Submission Quote Service
+  x-language: node
+  description: "#### Overview\nService to manage quote contents\n"
+
+# during dev, should point to your local machine
+host: localhost:10010
+# basePath prefixes all resource paths 
+basePath: /
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+
+  /categories/{language}:
+    x-swagger-router-controller: categories
+    get:
+      operationId: getAllLanguageCategories
+      description: Return a array of categories for a specified language
+      parameters:
+        - name: language
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GetCategoriesResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /quote:
+    # our controller name
+    x-swagger-router-controller: quote
+    # get:
+    #   operationId: getAll
+    #   description: get the movies list
+    #   # define the type of response for Success "200" and Error
+    #   responses:
+    #     "200":
+    #       description: Success
+    #       schema:
+    #         $ref: "#/definitions/GetQuoteResponse"
+    #     default:
+    #       description: Error
+    #       schema:
+    #         $ref: "#/definitions/ErrorResponse"
+    post:
+      operationId: save
+      description: add a quote
+      # movie info to be stored
+      parameters:
+        - name: quote
+          description: Quote properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Quote"
+      responses:
+        "201":
+          description: Success
+          schema:
+            $ref: "#/definitions/AddQuoteResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /quote/{uuid}:
+    x-swagger-router-controller: quote
+    put:
+        operationId: update
+        description: update a quote
+        # define the parameters
+        parameters:
+          - name: uuid
+            description: Quote uuid
+            type: string
+            in: path
+            required: true
+          - name: quote
+            description: Quote properties
+            in: body
+            required: true
+            schema:
+              $ref: "#/definitions/Quote"
+        responses:
+          "200":
+            description: Success
+            schema:
+              $ref: "#/definitions/GeneralResponse"
+          default:
+            description: Error
+            schema:
+              $ref: "#/definitions/ErrorResponse"
+    delete:
+      operationId: delQuote
+      description: delete a quote
+      # define the parameters
+      parameters:
+        - name: uuid
+          description: Quote id
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GeneralResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+
+  /quote/{language}/{category}:
+    # our controller name
+    x-swagger-router-controller: movie
+    get:
+      operationId: getOne
+      description: get a movie
+      # define the type of response for Success "200" and Error
+      parameters:
+        - name: language
+          type: string
+          in: path
+          required: true
+        - name: category
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GetQouteByLangCatResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+# complex objects have schema definitions
+definitions:
+  GeneralResponse:
+    type: object
+    properties:
+      success:
+        type: number
+        description: returns 1 if successful
+      description:
+        type: string
+        description: a short comment 
+    required:
+      - success
+      - description
+  Quote:
+    type: object
+    properties:
+      language:
+        type: string
+        description: The language
+      category: 
+        type: string
+        description: category
+      quote:
+        type: string
+        description: the quote
+    required:
+      - language
+      - category
+      - quote
+  GetCategoriesResponse:
+    required:
+      - categories
+    properties:
+      # The array of movies
+      categories:
+        type: array
+        items: 
+          type: string
+  AddQuoteResponse:
+    type: object
+    properties:
+      success:
+        type: number
+        description: returns 1 if successful
+      uuid:
+        type: string
+        description: returns uuid if successful 
+    required:
+      - success
+      - uuid
+  GetQuoteResponse:
+    required:
+      - quotes
+    properties:
+      # The array of movies
+      quotes:
+        type: array
+        items: 
+          type: object
+          properties:
+            language:
+                type: string
+            category: 
+              type: string
+            uuid:
+              type: string
+            quote:
+              type: string
+  GetQouteByLangCatResponse:
+    required:
+      - language
+      - category
+      - uuid
+      - quote
+    properties:
+      language:
+        type: string
+      category: 
+        type: string
+      uuid:
+        type: string
+      quote:
+        type: string
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string

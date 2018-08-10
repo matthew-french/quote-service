@@ -1,0 +1,41 @@
+{
+  "name": "Bots-content-service-quotes",
+  "version": "0.0.1",
+  "private": true,
+  "description": "New Swagger API Project",
+  "keywords": [],
+  "author": "matthew.french@gmail.com",
+  "license": "BSD",
+  "main": "app.js",
+  "engines": {
+    "node": ">=8.4.0"
+  },
+  "dependencies": {
+    "async": "2.6.1",
+    "aws-sdk": "2.289.0",
+    "date-fns": "1.29.0",
+    "hapi": "^10.0.0",
+    "stream-array": "1.1.2",
+    "swagger-hapi": "^0.1.0",
+    "sway": "2.0.1",
+    "uuid": "3.3.2"
+  },
+  "devDependencies": {
+    "chai": "4.1.2",
+    "eslint": "4.19.1",
+    "eslint-config-airbnb-base": "13.0.0",
+    "eslint-plugin-import": "2.13.0",
+    "eslint-plugin-promise": "3.8.0",
+    "jsdoc": "3.5.5",
+    "mocha": "5.2.0",
+    "mysql": "2.16.0",
+    "should": "^7.1.0",
+    "supertest": "^1.0.0"
+  },
+  "scripts": {
+    "start": "./scripts/local_start.sh",
+    "test": "swagger project test",
+    "createdb": "cd ./scripts/dynamodb && node createDynamodb.js && cd ../..",
+    "loaddata": "cd ./scripts/dynamodb && node loadDynamodbData.js && cd ../.."
+  }
+}

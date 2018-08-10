@@ -1,0 +1,24 @@
+TableName: contentQuote
+KeySchema:
+- AttributeName: uuid
+    KeyType: HASH
+- AttributeName: language
+    KeyType: RANGE
+- AttributeName: category
+    KeyType: RANGE
+- AttributeName: quote
+    KeyType: RANGE
+
+AttributeDefinitions:
+- AttributeName: uuid
+    AttributeType: S
+- AttributeName: language
+    KeyType: RANGE
+- AttributeName: category
+    AttributeType: S
+- AttributeName: quote
+    AttributeType: S
+    
+ProvisionedThroughput:
+    ReadCapacityUnits: 1
+    WriteCapacityUnits: 1
